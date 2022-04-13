@@ -5,8 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)(); // express 객체 받아오기
-// app.use(express.json());
-// app.use('/api', require('./api'));
+app.use(express_1.default.json()); // express에서 request body를 json으로 받아올 것
+app.use('/api', require('./api')); // use -> 모든 요청
+// localhost:8000/api -> api 폴더
+// localhost:8000/api/user -> user.ts
 app.get('/', (req, res, next) => {
     res.send('Hi! My name is Sohyeon! 배고파아');
 }); // get -> http method
