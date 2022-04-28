@@ -19,3 +19,11 @@ Node.js, Typescript, MongoDB (mongoose) Initial Boiler Plate
 
 ## GET /blog/:blogId
 <img width="1172" alt="스크린샷 2022-04-28 오후 10 35 43" src="https://user-images.githubusercontent.com/55437339/165764759-867b7793-f8b1-4e86-90c3-b1545c3630c4.png">
+
+<br/>
+
+## Delete /blog/:blogId
+<img width="1197" alt="스크린샷 2022-04-28 오후 10 44 46" src="https://user-images.githubusercontent.com/55437339/165766456-a3d41f2c-c2df-409a-8267-1595a61a88b8.png">
+
+## Delete /blog/:blogId DB
+<img width="1172" alt="image" src="https://user-images.githubusercontent.com/55437339/165766571-f414e324-6f6b-4d4d-9598-458b4efbbec6.png">
