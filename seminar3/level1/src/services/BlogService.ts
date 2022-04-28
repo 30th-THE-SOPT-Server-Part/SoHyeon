@@ -49,8 +49,18 @@ const findBlogById = async (blogId: string): Promise<BlogResponseDto | null> => 
     }
 }
 
+const deleteBlog = async (blogId: string) => {
+    try {
+        await Blog.findByIdAndDelete(blogId);
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
     createBlog,
     updateBlog,
-    findBlogById
+    findBlogById,
+    deleteBlog
 }
