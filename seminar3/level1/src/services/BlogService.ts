@@ -1,4 +1,5 @@
 import { BlogCreateDto } from "../interfaces/blog/BlogCreateDto";
+import { BlogResponseDto } from "../interfaces/blog/BlogResponseDto";
 import { BlogUpdateDto } from "../interfaces/blog/BlogUpdateDto";
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import Blog from "../models/Blog";
@@ -33,7 +34,23 @@ const updateBlog = async (blogId: string, blogUpdateDto: BlogUpdateDto) => {
     }
 }
 
+const findBlogById = async (blogId: string): Promise<BlogResponseDto | null> => {
+    try {
+        const blog = await Blog.findById(blogId);
+
+        if (!blog) {
+            return null;
+        }
+
+        return blog;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
     createBlog,
-    updateBlog
+    updateBlog,
+    findBlogById
 }
