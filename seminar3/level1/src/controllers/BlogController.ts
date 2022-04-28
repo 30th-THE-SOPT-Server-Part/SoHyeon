@@ -4,6 +4,7 @@ import statusCode from '../modules/statusCode';
 import message from '../modules/responseMessage';
 import util from '../modules/util';
 import { BlogService } from '../services';
+import { BlogUpdateDto } from '../interfaces/blog/BlogUpdateDto';
 
 /**
  * @route POST /blog
@@ -24,6 +25,26 @@ const createBlog = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route GET /blog/:blogUd
+ * @desc Update Blog
+ * @access Public
+ */
+const updateBlog = async (req: Request, res: Response) => {
+    const blogUpdateDto: BlogUpdateDto = req.body;
+    const { blogId } = req.params;
+
+    try {
+        await BlogService.updateBlog(blogId, blogUpdateDto);
+
+        res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, message.UPDATE_USER_SUCCESS));
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+    }
+}
+
 export default {
-    createBlog
+    createBlog,
+    updateBlog
 }
