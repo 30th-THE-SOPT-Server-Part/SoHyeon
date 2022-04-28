@@ -14,3 +14,8 @@ Node.js, Typescript, MongoDB (mongoose) Initial Boiler Plate
 
 ## PUT /blog/:blogId DB
 <img width="1143" alt="image" src="https://user-images.githubusercontent.com/55437339/165762629-666731d6-9d74-413e-b426-8bfe4b7ca69a.png">
+
+<br/>
+
+## GET /blog/:blogId
+<img width="1172" alt="스크린샷 2022-04-28 오후 10 35 43" src="https://user-images.githubusercontent.com/55437339/165764759-867b7793-f8b1-4e86-90c3-b1545c3630c4.png">
