@@ -1,2 +1,8 @@
 # node-typescript-init
 Node.js, Typescript, MongoDB (mongoose) Initial Boiler Plate
+
+## POST ./blog
+<img width="1188" alt="스크린샷 2022-04-28 오후 9 59 57" src="https://user-images.githubusercontent.com/55437339/165757910-841fc02e-2eff-430f-aac8-b438e4ece58a.png">
+
+## POST ./blog DB
+<img width="1173" alt="image" src="https://user-images.githubusercontent.com/55437339/165758075-a5a81553-f24f-4e02-8218-6f1cb969422c.png">
