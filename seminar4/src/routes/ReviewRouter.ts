@@ -10,6 +10,6 @@ router.post('/movies/:movieId', [
     body('content').notEmpty()
 ], ReviewController.createReview);
 
-// router.get('/movies/:movieId', ReviewController)
+router.get('/movies/:movieId', ReviewController.getReviews);
 
 export default router;

@@ -1,5 +1,6 @@
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import { ReviewCreateDto } from "../interfaces/review/ReviewCreateDto";
+import { ReviewResponseDto } from "../interfaces/review/ReviewResponseDto";
 import Review from "../models/Review";
 
 const createReview = async (movieId: string, reviewCreateDto: ReviewCreateDto): Promise<PostBaseResponseDto> => {
@@ -24,6 +25,31 @@ const createReview = async (movieId: string, reviewCreateDto: ReviewCreateDto): 
     }
 }
 
+const getReviews = async (movieId : string): Promise<ReviewResponseDto[]> => {
+    try {
+        const reviews = await Review.find({
+            movie: movieId
+        }).populate('writer', 'name').populate('movie');
+
+        const data = await Promise.all(reviews.map((review: any) => {
+            const result = {
+                writer: review.writer.name,
+                movie: review.movie,
+                title: review.title,
+                content: review.content
+            };
+
+            return result;
+        }))
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
-    createReview
+    createReview,
+    getReviews
 }
