@@ -50,7 +50,7 @@ const updateUser = async (req: Request, res: Response) => {
  * @access Public
  */
 const findUserById = async (req: Request, res: Response) => {
-    const { userId } = req.body;
+    const { userId } = req.params;
 
     try {
         const data = await UserService.findUserById(userId);

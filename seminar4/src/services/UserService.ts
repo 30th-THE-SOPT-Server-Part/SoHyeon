@@ -41,6 +41,8 @@ const findUserById = async (userId: string): Promise<UserResponseDto | null> => 
     try {
         const user = await User.findById(userId);
 
+        console.log(`user: ${user}`);
+
         if (!user) {
             return null;
         }
