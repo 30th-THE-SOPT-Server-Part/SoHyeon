@@ -12,5 +12,6 @@ router.post('/', [
 
 router.get('/:movieId', MovieController.getMovie);
 router.put('/:movieId', MovieController.updateMovie);
+router.delete('/:movieId', MovieController.deleteMovie);
 
 export default router;
