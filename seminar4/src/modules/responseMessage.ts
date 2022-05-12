@@ -19,7 +19,13 @@ const message = {
 
     // 리뷰 조회
     CREATE_REVIEW_SUCCESS: '리뷰 생성 성공',
-    READ_REVIEW_SUCCESS: '리뷰 조회 성공'
+    READ_REVIEW_SUCCESS: '리뷰 조회 성공',
+
+    // 영화 조회
+    CREATE_MOVIE_SUCCESS: '영화 생성 성공',
+    READ_MOVIE_SUCCESS: '영화 조회 성공',
+    DELETE_MOVIE_SUCCESS: '영화 삭제 성공',
+    UPDATE_MOVIE_SUCCESS: '영화 수정 성공'
 }
 
 export default message;
