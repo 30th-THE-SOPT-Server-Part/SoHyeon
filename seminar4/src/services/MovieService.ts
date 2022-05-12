@@ -1,5 +1,6 @@
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import { MovieCreateDto } from "../interfaces/movie/MovieCreateDto";
+import { MovieResponseDto } from "../interfaces/movie/MovieResponseDto";
 import Movie from "../models/Movie";
 
 const createMovie = async (startDate: Date, moviecreateDto: MovieCreateDto): Promise<PostBaseResponseDto> => {
@@ -25,6 +26,24 @@ const createMovie = async (startDate: Date, moviecreateDto: MovieCreateDto): Pro
     }
 }
 
+const getMovie = async (movieId : string): Promise<MovieResponseDto | null> => {
+    try {
+        const movie = await Movie.findById(movieId);
+
+        console.log(`movie: ${movie}`);
+
+        if (!movie) {
+            return null;
+        }
+
+        return movie;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
-    createMovie
+    createMovie,
+    getMovie
 }

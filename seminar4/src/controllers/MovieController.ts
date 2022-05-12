@@ -33,6 +33,26 @@ const createMovie = async (req: Request, res: Response) => {
 
 }
 
+/**
+ * @route GET /movie/:movieId
+ * @param req 
+ * @param res 
+ */
+const getMovie = async (req: Request, res: Response) => {
+    const { movieId } = req.params;
+
+    try {
+        const data = await MovieService.getMovie(movieId);
+
+        res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_MOVIE_SUCCESS));
+
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+    }
+}
+
 export default {
-    createMovie
+    createMovie,
+    getMovie
 }

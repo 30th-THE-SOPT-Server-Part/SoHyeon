@@ -10,4 +10,6 @@ router.post('/', [
     body('story').notEmpty()
 ], MovieController.createMovie);
 
+router.get('/:movieId', MovieController.getMovie);
+
 export default router;
