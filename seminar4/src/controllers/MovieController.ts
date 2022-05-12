@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import { validationResult } from "express-validator";
 import { MovieCreateDto } from "../interfaces/movie/MovieCreateDto";
+import { MovieUpdateDto } from '../interfaces/movie/MovieUpdateDto';
 import message from "../modules/responseMessage";
 import statusCode from "../modules/statusCode";
 import util from "../modules/util";
@@ -35,8 +36,7 @@ const createMovie = async (req: Request, res: Response) => {
 
 /**
  * @route GET /movie/:movieId
- * @param req 
- * @param res 
+ * @desc Get Movie
  */
 const getMovie = async (req: Request, res: Response) => {
     const { movieId } = req.params;
@@ -52,7 +52,26 @@ const getMovie = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route PUT /movie/:movieId
+ * @desc Update Movie
+ */
+const updateMovie = async (req: Request, res:Response) => {
+    const movieUpdateDto: MovieUpdateDto = req.body;
+    const { movieId } = req.params;
+
+    try {
+        await MovieService.updateMovie(movieId, movieUpdateDto);
+
+        res.status(statusCode.NO_CONTENT).send(util.success(statusCode.NO_CONTENT, message.UPDATE_MOVIE_SUCCESS));
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+    }
+}
+
 export default {
     createMovie,
-    getMovie
+    getMovie,
+    updateMovie
 }
