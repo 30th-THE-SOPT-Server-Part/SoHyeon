@@ -1,5 +1,7 @@
 import express, {Request, Response} from 'express';
 import { validationResult } from "express-validator";
+import { MovieCommentCreateDto } from '../interfaces/movie/MovieCommentCreateDto';
+import { MovieCommentUpdateDto } from '../interfaces/movie/MovieCommentUpdateDto';
 import { MovieCreateDto } from "../interfaces/movie/MovieCreateDto";
 import { MovieUpdateDto } from '../interfaces/movie/MovieUpdateDto';
 import message from "../modules/responseMessage";
@@ -20,10 +22,11 @@ const createMovie = async (req: Request, res: Response) => {
 
     // POST 파라미터
     const moviecreateDto: MovieCreateDto = req.body;
-    const startDate: Date = new Date();
+    
+    //const startDate: Date = new Date();
 
     try {
-        const data = await MovieService.createMovie(startDate, moviecreateDto);
+        const data = await MovieService.createMovie(moviecreateDto);
 
         res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_MOVIE_SUCCESS));
     } catch (error) {
@@ -43,8 +46,11 @@ const getMovie = async (req: Request, res: Response) => {
 
     try {
         const data = await MovieService.getMovie(movieId);
+        if (!data) {
+            res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+        }
 
-        res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_MOVIE_SUCCESS));
+        res.status(statusCode.OK).send(util.success(statusCode.OK, message.READ_MOVIE_SUCCESS, data));
 
     } catch (error) {
         console.log(error);
@@ -84,9 +90,64 @@ const deleteMovie = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @route POST /movie/:movieId/comment
+ * @desc Create Movie Comment
+ */
+const createMovieComment = async (req: Request, res: Response) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.NULL_VALUE));
+    }
+
+    const movieCommentCreateDto: MovieCommentCreateDto = req.body;
+    const { movieId } = req.params;
+
+    try {
+        const data = await MovieService.createMovieComment(movieId, movieCommentCreateDto);
+        if(!data) {
+            res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+        }
+
+        res.status(statusCode.CREATED).send(util.success(statusCode.CREATED, message.CREATE_MOVIE_COMMENT_SUCCESS, data));
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+    }
+}
+
+/**
+ * @route PUT /movie/:movieId/comments/:commentId
+ * @desc Update Movie Comment
+ * @access Private : auth 추가
+ */
+const updateMovieComment = async (req: Request, res: Response) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        return res.status(statusCode.BAD_REQUEST).send(util.fail(statusCode.BAD_REQUEST, message.BAD_REQUEST));
+    }
+
+    const movieCommentUpdateDto: MovieCommentUpdateDto = req.body;
+    const { movieId, commentId } = req.params;
+    const userId = req.body.user.id;
+
+    try {
+        const data = await MovieService.updateMovieComment(movieId, commentId, userId, movieCommentUpdateDto);
+
+        if (!data) return res.status(statusCode.NOT_FOUND).send(util.fail(statusCode.NOT_FOUND, message.NOT_FOUND));
+
+        res.status(statusCode.OK).send(util.success(statusCode.OK, message.UPDATE_MOVIE_COMMENT_SUCCESS, data));
+    } catch (error) {
+        console.log(error);
+        res.status(statusCode.INTERNAL_SERVER_ERROR).send(util.fail(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR));
+    }
+}
+
 export default {
     createMovie,
     getMovie,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    createMovieComment,
+    updateMovieComment
 }

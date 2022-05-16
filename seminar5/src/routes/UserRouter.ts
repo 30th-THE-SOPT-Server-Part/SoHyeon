@@ -7,16 +7,23 @@ const router: Router = Router();
 
 // route => use (/user) => post (/)
 router.post('/', [
+    body('password').isLength({min:6}),
+    body('password').notEmpty(),
     body('name').notEmpty(),
     body('phone').notEmpty(),
-    body('email','잘못된 이메일 형식이에요!').isEmail(),
-    body('age').notEmpty(),
-    body('school').notEmpty()
+    body('email').isEmail()
 ],UserController.createUser);
 
 
 router.put('/:userId', UserController.updateUser);
 router.get('/:userId', UserController.findUserById);
 router.delete('/:userId', UserController.deleteUser);
+
+router.post('/signin', [
+    body('email').notEmpty(),
+    body('email').isEmail(),
+    body('password').isLength({min: 6}),
+    body('password').notEmpty()
+], UserController.signInUser);
 
 export default router;
