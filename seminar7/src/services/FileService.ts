@@ -1,10 +1,7 @@
 import { FileResponseDto } from "../interfaces/file/FileResponseDto";
 import File from "../models/File";
 
-const createFile = async (
-  link: string,
-  fileName: string
-): Promise<FileResponseDto> => {
+const createFile = async (link: string, fileName: string): Promise<FileResponseDto> => {
   try {
     const file = new File({
       link,

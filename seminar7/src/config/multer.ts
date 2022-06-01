@@ -12,6 +12,7 @@ const upload = multer({
      * contentType: mimetype은 자동으로 설정
      * acl: Access control for the file
      * key: 파일 이름 정의, bucket 내에서 이름이 겹치면 동일 파일로 인식해서 보통 고유하게 만든다.
+     * originalname : 원래 파일 이름
      */
     s3: s3,
     bucket: config.bucketName,

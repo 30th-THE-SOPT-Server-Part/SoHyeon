@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import config from "../config"; 
+import File from "../models/File";
 import Movie from "../models/Movie";
 import Review from "../models/Review";
 
@@ -18,6 +19,10 @@ const connectDB = async () => {
     Review.createCollection().then(function (collection) {
       console.log("Review Collections is created!");
     });
+
+    File.createCollection().then(function (collection) {
+      console.log("File Collections is created!");
+    })
     
   } catch (err: any) {
     console.error(err.message);
