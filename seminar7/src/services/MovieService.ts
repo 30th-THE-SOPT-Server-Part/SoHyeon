@@ -94,11 +94,27 @@ const updateMovieComment = async (movieId: string, commentId: string, userId: st
     }
 }
 
+const getMovieBySearch = async (search: string): Promise<MovieInfo[]> => {
+    const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
+
+    try {
+        const titleRegex: RegExp = regex(search);
+
+        const movies = await Movie.find({ title: { $regex: titleRegex } });
+
+        return movies;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export default {
     createMovie,
     getMovie,
     updateMovie,
     deleteMovie,
     createMovieComment,
-    updateMovieComment
+    updateMovieComment,
+    getMovieBySearch
 }
