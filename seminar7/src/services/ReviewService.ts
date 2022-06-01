@@ -64,12 +64,14 @@ const getReviewBySearch = async (movieId:string, search: string, option: ReviewO
         if (option === 'title') {
             reviews = await Review.find({ title: { $regex: reviewRegex } })
                 .where('movie').equals(movieId)
+                .populate(['movie', 'writer'])
                 .sort({ createAt: -1 })
                 .skip(perPage * (page - 1))
                 .limit(perPage);
         } else if (option === 'content') {
             reviews = await Review.find({ content: { $regex: reviewRegex } })
                 .where('movie').equals(movieId)
+                .populate(['movie', 'writer'])
                 .sort({ createAt: -1 })
                 .skip(perPage * (page - 1))
                 .limit(perPage);
@@ -81,6 +83,7 @@ const getReviewBySearch = async (movieId:string, search: string, option: ReviewO
                 ]
             })
                 .where('movie').equals(movieId)
+                .populate(['movie', 'writer'])
                 .sort({ createAt: -1 })
                 .skip(perPage * (page - 1))
                 .limit(perPage);
