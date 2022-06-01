@@ -17,4 +17,6 @@ router.post(
 
 router.get("/movies/:movieId", auth, ReviewController.getReviews);
 
+router.get('/movie/:movieId', ReviewController.getReviewBySearch);
+
 export default router;
