@@ -3,6 +3,7 @@ import { MovieCommentCreateDto } from "../interfaces/movie/MovieCommentCreateDto
 import { MovieCommentUpdateDto } from "../interfaces/movie/MovieCommentUpdateDto";
 import { MovieCreateDto } from "../interfaces/movie/MovieCreateDto";
 import { MovieCommentInfo, MovieInfo } from "../interfaces/movie/MovieInfo";
+import { MovieOptionType } from "../interfaces/movie/MovieOptionType";
 import { MovieResponseDto } from "../interfaces/movie/MovieResponseDto";
 import { MovieUpdateDto } from "../interfaces/movie/MovieUpdateDto";
 import Movie from "../models/Movie";
@@ -94,13 +95,25 @@ const updateMovieComment = async (movieId: string, commentId: string, userId: st
     }
 }
 
-const getMovieBySearch = async (search: string): Promise<MovieInfo[]> => {
+const getMovieBySearch = async (search: string, option: MovieOptionType): Promise<MovieInfo[]> => {
     const regex = (pattern: string) => new RegExp(`.*${pattern}.*`);
 
+    let movies: MovieInfo[] = [];
     try {
         const titleRegex: RegExp = regex(search);
 
-        const movies = await Movie.find({ title: { $regex: titleRegex } });
+        if (option === 'title') {
+            movies = await Movie.find({ title: { $regex: titleRegex } });
+        } else if (option === 'director') {
+            movies = await Movie.find({ director: { $regex: titleRegex } });
+        } else {
+            movies = await Movie.find({
+                $or: [
+                    { title: { $regex: titleRegex } },
+                    { director: { $regex: titleRegex } }
+                ]
+            });
+        }
 
         return movies;
     } catch (error) {
